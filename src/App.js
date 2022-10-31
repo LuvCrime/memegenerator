@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Header } from "./header/Header";
+import { TextFields } from "./memeFields/TextFields";
+import { AutocompleteMemesList } from "./memeFields/AutocompleteMemesList";
+import { Box, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { MemeDisplayer } from "./memeDisplayer/MemeDisplayer";
+import { DownloadButton } from "./downloadButton/DownloadButton";
+import { GenerateButton } from "./generateButton/GenerateButton";
 
-function App() {
+export const App = () => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box p={4}>
+      <Header />
+      <Box
+        mt={2}
+        display="flex"
+        justifyContent="space-between"
+        flexDirection={matches ? "column" : "row"}
+      >
+        <Box mr={1} width="50%">
+          <AutocompleteMemesList />
+          <TextFields />
+          <Box mt={2} display="flex" justifyContent="space-between">
+            <DownloadButton />
+            <GenerateButton />
+          </Box>
+        </Box>
+        <MemeDisplayer />
+      </Box>
+    </Box>
   );
-}
-
-export default App;
+};
